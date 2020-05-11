@@ -1,0 +1,13 @@
+.grid-node {
+    flex: 1 0;
+    height: auto;
+    border: 1px solid grey;
+    border-radius: 2px; 
+    margin: 2px 2px;
+}
+
+.grid-node:after {
+    content: '';
+    display: block;
+    padding-bottom: 100%;
+}
