@@ -7,7 +7,7 @@ interface Props {
 
 export const GridNode: React.FC<Props> = ({numberOfElementsPerRow}) => {
     return (
-        <div className='grid-node' style={{flexBasis: `${100 / numberOfElementsPerRow}% - 2px`}} >
+        <div className='grid-node' style={{flexBasis: `${100 / numberOfElementsPerRow}% - 1px`}} >
         </div>
     );
 }

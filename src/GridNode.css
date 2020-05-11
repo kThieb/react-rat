@@ -3,7 +3,7 @@
     height: auto;
     border: 1px solid grey;
     border-radius: 2px; 
-    margin: 2px 2px;
+    margin: 1px 1px;
 }
 
 .grid-node:after {
