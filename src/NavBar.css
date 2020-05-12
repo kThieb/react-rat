@@ -1,7 +1,7 @@
 /* NavBar */
 
 .navbar {
-  height: var(--nav-size);
+  height: 7.5vh;
   background-color: var(--bg);
   padding: 0 1rem;
   border-bottom: var(--border);
@@ -23,7 +23,7 @@
 
 .icon-button {
   --button-size: calc(var(--nav-size) * 0.5);
-  height: var(--button-size);
+  height: 3vh;
   background-color: #484a4d;
   border-radius: 5px;
   padding: 5px;

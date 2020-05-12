@@ -1,15 +1,14 @@
 .row {
-    display: flex; 
-    width: 98vw;
-    height: auto;
-    justify-content: space-around;
+  display: flex;
+  width: 98vw;
+  height: auto;
+  justify-content: space-around;
 }
 
 .grid {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-basis: 100%;
-    height: 75vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-basis: 100%;
+  height: 60vh;
 }
-

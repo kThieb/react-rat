@@ -5,6 +5,7 @@ interface Props {
   numberOfElementsPerRow: number;
   x: number;
   y: number;
+  stateOfNode: number;
 }
 
 export const GridNode: React.FC<Props> = ({ numberOfElementsPerRow, x, y }) => {
