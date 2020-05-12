@@ -10,10 +10,12 @@
     "@types/node": "^12.12.38",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
+    "heap-js": "^2.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
     "react-transition-group": "^4.4.1",
+    "ts-heap": "^1.1.3",
     "typescript": "^3.8.3"
   },
   "scripts": {
