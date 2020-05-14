@@ -3,4 +3,6 @@
   flex-direction: row;
   height: 8vh;
   width: 100vw;
+  justify-content: center;
+  align-items: center;
 }

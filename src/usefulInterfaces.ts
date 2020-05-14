@@ -6,4 +6,7 @@ export interface node {
   isEnd: boolean;
   isVisited: boolean;
   isWall: boolean;
+  isShortestPath: boolean;
+  className: string;
+  waitClassChange: number;
 }

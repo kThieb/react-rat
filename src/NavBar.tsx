@@ -18,9 +18,9 @@ export const NavItem: React.FC<NavItemProps> = (props) => {
 
   return (
     <li className="nav-item">
-      <a href="#" className="icon-button" onClick={() => setOpen(!open)}>
+      <p className="icon-button" onClick={() => setOpen(!open)}>
         Algorithms
-      </a>
+      </p>
       {open && props.children}
     </li>
   );
@@ -29,22 +29,23 @@ export const NavItem: React.FC<NavItemProps> = (props) => {
 interface DropDownProps {
   leftIcon?: string;
   rightIcon?: string;
+  algorithmName: string;
+  changeAlgorithm: (algorithmName: string) => void;
 }
 
 export const DropDownMenu: React.FC = (props) => {
-  const DropDownItem: React.FC<DropDownProps> = (props) => {
-    return (
-      <a href="#" className="menu-item">
-        {props.children}
-      </a>
-    );
-  };
+  return <div className="dropdown">{props.children}</div>;
+};
 
+export const DropDownItem: React.FC<DropDownProps> = (props) => {
   return (
-    <div className="dropdown">
-      <DropDownItem>Dijkstra's algorithm</DropDownItem>
-      <DropDownItem>A* Algorithm</DropDownItem>
-      <DropDownItem>Greedy Algorithm</DropDownItem>
+    <div
+      className="menu-item"
+      onClick={(e) => {
+        props.changeAlgorithm(props.algorithmName);
+      }}
+    >
+      {props.children}
     </div>
   );
 };

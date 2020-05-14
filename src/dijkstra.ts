@@ -1,23 +1,21 @@
-import { node } from "./nodeInterface";
+import { node } from "./usefulInterfaces";
 import { BinaryHeap } from "./binaryHeap";
+import { Grid } from "./Grid";
 
-export const dikjstra: (
+export const dijkstra: (
   grid: node[][],
   startNode: node,
   targetNode: node
-) => [Set<node>, node[]] = (grid, startNode, endNode) => {
+) => [node[], node[]] = (grid, startNode, endNode) => {
   const m = grid.length,
     n = grid[0].length;
-
-  // Assign the start node to visited from the start
-  startNode.isVisited = true;
 
   // Initialize the distances array
   const distances: number[][] = [];
   for (let i: number = 0; i < m; i++) {
     distances.push([]);
     for (let j: number = 0; j < n; j++) {
-      distances[i].push(Infinity);
+      distances[i].push(Number.MAX_SAFE_INTEGER);
     }
   }
 
@@ -29,7 +27,7 @@ export const dikjstra: (
   predecessor[startNode.id] = startNode;
 
   // Initialize the visited nodes array
-  let visited: Set<node> = new Set([]);
+  let visited: node[] = [];
 
   // Initialize the directions array we will use to perform Dijkstra's algorithm
   const directions: number[][] = [
@@ -49,8 +47,8 @@ export const dikjstra: (
     let currentNode: node = ensure(pq.pop());
 
     // add the current node to the visited nodes
-    currentNode.isVisited = true;
-    visited.add(currentNode);
+    // currentNode.isVisited = true;
+    visited.push(currentNode);
 
     // Get the coordinates of the nodes
     let currentX: number = currentNode.x;
@@ -66,9 +64,11 @@ export const dikjstra: (
       if (nextX >= 0 && nextX < m && nextY >= 0 && nextY < n) {
         let nextNode: node = grid[nextX][nextY];
 
+        if (nextNode.isWall) continue;
+
         // If the node is not yet visited, remove it from the heap and
         // put it back in with its new distance as the score function
-        if (!visited.has(nextNode)) {
+        if (!visited.find((currentNode) => currentNode === nextNode)) {
           pq.remove(nextNode);
           pq.push(nextNode);
         }
@@ -86,17 +86,13 @@ export const dikjstra: (
 
         // If we found the target node then we return what we need
         if (nextNode === endNode) {
-          // Add the end node to the visited list
-          nextNode.isVisited = true;
-          visited.add(nextNode);
-
           // Retrieve the shortest path
           const shortestPath = retrieveShortestPath(
             predecessor,
             startNode,
             endNode
           );
-
+          visited.shift();
           // return the correct value
           return [visited, shortestPath];
         }
@@ -113,12 +109,14 @@ const retrieveShortestPath: (
   startNode: node,
   endNode: node
 ) => node[] = (predecessor, startNode, endNode) => {
-  let shortestPath = [endNode];
+  let shortestPath = [];
   let current = endNode;
   while (current !== startNode) {
     current = predecessor[current.id];
     shortestPath.unshift(current);
   }
+  shortestPath.shift();
+
   return shortestPath;
 };
 

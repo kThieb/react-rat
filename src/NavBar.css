@@ -15,6 +15,8 @@
 }
 
 .nav-item {
+  cursor: pointer;
+  color: white;
   width: auto;
   display: flex;
   align-items: center;
@@ -50,6 +52,7 @@
 .menu-item {
   height: 50px;
   display: flex;
+  color: white;
   align-items: center;
   border-radius: var(--border-radius);
   transition: background var(--speed);
@@ -57,7 +60,7 @@
 }
 
 .menu-item:hover {
-  background-color: #525357;
+  background: #525357;
 }
 
 .icon-right {
