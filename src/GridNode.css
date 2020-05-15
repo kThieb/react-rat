@@ -1,8 +1,10 @@
+/* normal grid node style */
 .grid-node {
   flex: 1 0;
   height: auto;
-  border: 1px solid #b2bbcf;
-  border-radius: 1px;
+  border: 1px solid black;
+  background-color: #ecf8f8;
+  /* border-radius: 1px; */
   /* margin: 1px 1px; */
 }
 
@@ -12,48 +14,81 @@
   padding-bottom: 100%;
 }
 
+/* start node */
+.start-node {
+  background-color: green;
+}
+
+/* end node */
+.end-node {
+  background-color: red;
+}
+
 /* handle the walls */
 .no-wall-left {
-  border-left: 1px solid white;
+  border-left: 1px solid rgb(96, 122, 133, 0.1);
 }
 
 .no-wall-right {
-  border-right: 1px solid white;
+  border-right: 1px solid rgb(96, 122, 133, 0.1);
 }
 
 .no-wall-top {
-  border-top: 1px solid white;
+  border-top: 1px solid rgb(96, 122, 133, 0.1);
 }
 
 .no-wall-bottom {
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid rgb(96, 122, 133, 0.1);
 }
 
 /* visited nodes styles */
+.visited-node {
+  background-color: #02c39a;
+  animation: colorChangeVisited 1500ms ease-in;
+}
 
 .visited-node:after {
-  background: #02c39a;
-  animation: visitedAnim 500ms ease-in;
+  background-color: #02c39a;
+  animation: visitedAnim 1500ms ease-in;
+}
+
+@keyframes colorChangeVisited {
+  0% {
+    background-color: #ecf8f8;
+  }
+
+  50% {
+    background-color: #028090;
+  }
+
+  100% {
+    background-color: #02c39a;
+  }
 }
 
 @keyframes visitedAnim {
   0% {
-    /* transform: scale(0.3); */
-    background: #f0f3bd;
+    transform: scale(0.3);
+    background-color: #f0f3bd;
   }
 
   50% {
-    /* transform: scale(1.2); */
-    background: #028090;
+    transform: scale(1.2);
+    background-color: #028090;
   }
 
   100% {
-    /* transform: scale(1); */
-    background: #02c39a;
+    transform: scale(1);
+    background-color: #02c39a;
   }
 }
 
 /* shortest path nodes */
+
+.shortest-path-node {
+  background-color: #bdb2ff;
+  animation: colorChangeShortestPath 500ms ease-in;
+}
 
 .shortest-path-node:after {
   background: #bdb2ff;
@@ -74,6 +109,20 @@
   100% {
     transform: scale(1);
     background: #bdb2ff;
+  }
+}
+
+@keyframes colorChangeShortestPath {
+  0% {
+    background-color: #02c39a;
+  }
+
+  75% {
+    background-color: #02c39a;
+  }
+
+  100% {
+    background-color: #bdb2ff;
   }
 }
 

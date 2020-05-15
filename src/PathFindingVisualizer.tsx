@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
+import "./PathFindingVisualizer.css";
 import { Grid } from "./Grid";
 import { NavBar, NavItem, DropDownMenu, DropDownItem } from "./NavBar";
 import { SecondaryHeader } from "./SecondaryHeader";
 import { node } from "./usefulInterfaces";
-import { dijkstra } from "./dijkstra";
+import { dijkstra, dijkstraWithWalls } from "./dijkstra";
 import { generateMazeGraph } from "./mazeGraph";
 import { constructGrid } from "./constructGrid";
 
@@ -60,7 +60,7 @@ const PathFindingVisualizer: React.FC = () => {
         };
         newGrid[x][y] = newNode;
         setGrid(newGrid);
-      }, 20 * i);
+      }, 25 * i);
     }
 
     const m = path.length;
@@ -79,7 +79,7 @@ const PathFindingVisualizer: React.FC = () => {
         };
         newGrid[x][y] = newNode;
         setGrid(newGrid);
-      }, 25 * n + 25 * i);
+      }, 25 * n + 40 * i);
     }
   };
 
@@ -93,13 +93,17 @@ const PathFindingVisualizer: React.FC = () => {
   // This function changes the algorithm that will be run
   const chooseAlgorithm: (
     algorithmName: string
-  ) => (grid: node[][], startNode: node, endNode: node) => [node[], node[]] = (
-    algorithmName
-  ) => {
-    if (algorithmName === "dijkstra") {
-      return dijkstra;
+  ) => (
+    grid: node[][],
+    pairGrid: [number, number][][],
+    mazeGraph: Map<[number, number], [number, number][]>,
+    startNode: node,
+    endNode: node
+  ) => [node[], node[]] = (algorithmName) => {
+    if (algorithmName === "dijkstraWithWalls") {
+      return dijkstraWithWalls;
     }
-    return dijkstra;
+    return dijkstraWithWalls;
   };
 
   // The following functions handles the making of walls in the grid
@@ -155,6 +159,12 @@ const PathFindingVisualizer: React.FC = () => {
             </DropDownItem>
             <DropDownItem
               changeAlgorithm={handleAlgorithmChange}
+              algorithmName="dijkstraWithWalls"
+            >
+              Dijkstra's algorithm with a maze
+            </DropDownItem>
+            <DropDownItem
+              changeAlgorithm={handleAlgorithmChange}
               algorithmName="A*"
             >
               A* Algorithm
@@ -173,7 +183,13 @@ const PathFindingVisualizer: React.FC = () => {
           className="visualize-button"
           onClick={(e) => {
             visualizeAlgorithm(
-              ...chooseAlgorithm(algorithm)(grid, startNode, endNode)
+              ...chooseAlgorithm(algorithm)(
+                grid,
+                pairGrid,
+                mazeGraph,
+                startNode,
+                endNode
+              )
             );
           }}
         >

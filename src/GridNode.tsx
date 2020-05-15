@@ -20,12 +20,12 @@ export const _GridNode: React.FC<Props> = ({
   handleMouseEnter,
   handleMouseUp,
 }) => {
-  const style = {
-    flexBasis: `${100 / numberOfElementsPerRow}% - 1px`,
-    backgroundColor: "white",
-  };
-  if (node.isStart) style.backgroundColor = "green";
-  if (node.isEnd) style.backgroundColor = "red";
+  // const style = {
+  //   flexBasis: `${100 / numberOfElementsPerRow}% - 1px`,
+  //   backgroundColor: "white",
+  // };
+  // if (node.isStart) style.backgroundColor = "green";
+  // if (node.isEnd) style.backgroundColor = "red";
 
   let addedClassName: string = "";
   for (let i = 0; i < neighbors.length; i++) {
@@ -41,7 +41,6 @@ export const _GridNode: React.FC<Props> = ({
   return (
     <div
       className={node.className + addedClassName}
-      style={style}
       onMouseDown={() => handleMouseDown(node.x, node.y)}
       onMouseEnter={() => handleMouseEnter(node.x, node.y)}
       onMouseUp={() => handleMouseUp()}
