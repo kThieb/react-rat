@@ -5,6 +5,8 @@ import { node } from "./usefulInterfaces";
 
 interface Props {
   grid: node[][];
+  maze: Map<[number, number], [number, number][]>;
+  pairGrid: [number, number][][];
   handleMouseUp: () => void;
   handleMouseEnter: (x: number, y: number) => void;
   handleMouseDown: (x: number, y: number) => void;
@@ -12,6 +14,8 @@ interface Props {
 
 export const Grid: React.FC<Props> = ({
   grid,
+  maze,
+  pairGrid,
   handleMouseDown,
   handleMouseEnter,
   handleMouseUp,
@@ -28,6 +32,7 @@ export const Grid: React.FC<Props> = ({
                 numberOfElementsPerRow={rowLength}
                 key={id + index * rowLength}
                 node={node}
+                neighbors={ensure(maze.get(pairGrid[node.x][node.y]))}
                 handleMouseDown={handleMouseDown}
                 handleMouseEnter={handleMouseEnter}
                 handleMouseUp={handleMouseUp}
@@ -39,3 +44,15 @@ export const Grid: React.FC<Props> = ({
     </div>
   );
 };
+
+// This function is there to ensure that a value is not null or undefined
+function ensure<T>(
+  argument: T | undefined | null,
+  message: string = "This value was promised to be there."
+): T {
+  if (argument === undefined || argument === null) {
+    throw new TypeError(message);
+  }
+
+  return argument;
+}

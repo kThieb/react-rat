@@ -1,6 +1,5 @@
 import { node } from "./usefulInterfaces";
 import { BinaryHeap } from "./binaryHeap";
-import { Grid } from "./Grid";
 
 export const dijkstra: (
   grid: node[][],

@@ -10,3 +10,8 @@ export interface node {
   className: string;
   waitClassChange: number;
 }
+
+export interface simplifiedNode {
+  x: number;
+  y: number;
+}

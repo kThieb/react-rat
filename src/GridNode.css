@@ -1,9 +1,9 @@
 .grid-node {
   flex: 1 0;
   height: auto;
-  border: 1px solid grey;
-  border-radius: 2px;
-  margin: 1px 1px;
+  border: 1px solid #b2bbcf;
+  border-radius: 1px;
+  /* margin: 1px 1px; */
 }
 
 .grid-node:after {
@@ -12,55 +12,50 @@
   padding-bottom: 100%;
 }
 
-/* visited nodes styles */
-.visited-node {
-  flex: 1 0;
-  height: auto;
-  border: 1px solid grey;
-  border-radius: 2px;
-  margin: 1px 1px;
+/* handle the walls */
+.no-wall-left {
+  border-left: 1px solid white;
 }
 
+.no-wall-right {
+  border-right: 1px solid white;
+}
+
+.no-wall-top {
+  border-top: 1px solid white;
+}
+
+.no-wall-bottom {
+  border-bottom: 1px solid white;
+}
+
+/* visited nodes styles */
+
 .visited-node:after {
-  content: "";
-  display: block;
-  padding-bottom: 100%;
-  animation: visitedAnim 500ms ease-in;
   background: #02c39a;
+  animation: visitedAnim 500ms ease-in;
 }
 
 @keyframes visitedAnim {
   0% {
-    transform: scale(0.3);
+    /* transform: scale(0.3); */
     background: #f0f3bd;
   }
 
   50% {
-    transform: scale(1.2);
+    /* transform: scale(1.2); */
     background: #028090;
   }
 
   100% {
-    transform: scale(1);
+    /* transform: scale(1); */
     background: #02c39a;
   }
 }
 
 /* shortest path nodes */
 
-.shortest-path-node {
-  flex: 1 0;
-  height: auto;
-  border: 1px solid grey;
-  border-radius: 2px;
-  margin: 1px 1px;
-  background: #bdb2ff;
-}
-
 .shortest-path-node:after {
-  content: "";
-  display: block;
-  padding-bottom: 100%;
   background: #bdb2ff;
   animation: shortestPathAnim 500ms ease-in;
 }
@@ -84,18 +79,6 @@
 
 /* Wall Node */
 
-.wall-node {
-  flex: 1 0;
-  height: auto;
-  border: 1px solid grey;
-  border-radius: 2px;
-  margin: 1px 1px;
-  background: black;
-}
-
 .wall-node:after {
-  content: "";
-  display: block;
-  padding-bottom: 100%;
   background: black;
 }

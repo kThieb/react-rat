@@ -5,67 +5,33 @@ import { NavBar, NavItem, DropDownMenu, DropDownItem } from "./NavBar";
 import { SecondaryHeader } from "./SecondaryHeader";
 import { node } from "./usefulInterfaces";
 import { dijkstra } from "./dijkstra";
+import { generateMazeGraph } from "./mazeGraph";
+import { constructGrid } from "./constructGrid";
 
-const NUMBER_OF_ROWS = 50;
-const NUMBER_OF_COLUMN = 20;
+const NUMBER_OF_ROWS: number = 50;
+const NUMBER_OF_COLUMN: number = 20;
 
-// This function (Not a React Component!) is made to initialize the grid rendered in the App component.
-const constructGrid: (
-  numberOfRows: number,
-  numberOfColumn: number,
-  startNode: [number, number],
-  endNode: [number, number]
-) => [node[][], node, node] = (
-  numberOfRow,
-  numberOfColumn,
-  startNode,
-  endNode
-) => {
-  let result: node[][] = [];
-  for (let i: number = 0; i < numberOfColumn; i++) {
-    let currentRow: node[] = [];
-    for (let j: number = 0; j < numberOfRow; j++) {
-      let currentNode = {
-        id: i + j * numberOfColumn,
-        x: i,
-        y: j,
-        isStart: false,
-        isEnd: false,
-        isVisited: false,
-        isWall: false,
-        isShortestPath: false,
-        waitClassChange: 0,
-        className: "grid-node",
-      };
-      currentRow.push(currentNode);
-    }
-    result.push(currentRow);
-  }
-  result[startNode[0]][startNode[1]] = {
-    ...result[startNode[0]][startNode[1]],
-    isStart: true,
-  };
-  result[endNode[0]][endNode[1]] = {
-    ...result[endNode[0]][endNode[1]],
-    isEnd: true,
-  };
-  return [
-    result,
-    result[startNode[0]][startNode[1]],
-    result[endNode[0]][endNode[1]],
-  ];
-};
+// We define these constants out of the functional component
+// that the App uses to avoid re-running the functions to create
+// these each time there is a re-render
+const [firstGrid, firstStartNode, firstEndNode] = constructGrid(
+  NUMBER_OF_ROWS,
+  NUMBER_OF_COLUMN,
+  [9, 10],
+  [9, 40]
+);
 
-// App component rendering everything in the webpage.
-function App() {
-  const [firstGrid, firstStartNode, firstEndNode] = constructGrid(
-    NUMBER_OF_ROWS,
-    NUMBER_OF_COLUMN,
-    [9, 10],
-    [9, 40]
-  );
+const [firstpairGrid, mazeGraph] = generateMazeGraph(
+  NUMBER_OF_ROWS,
+  NUMBER_OF_COLUMN,
+  firstGrid
+);
 
+// Component rendering everything in the webpage.
+const PathFindingVisualizer: React.FC = () => {
   const [grid, setGrid] = useState(firstGrid);
+  const [maze, setMaze] = useState(mazeGraph);
+  const [pairGrid, setPairGrid] = useState(firstpairGrid);
   const [algorithm, setAlgorithm] = useState("dijkstra");
   const [mouseIsPressed, setMouseIsPressed] = useState(false);
 
@@ -89,12 +55,12 @@ function App() {
         const newNode = {
           ...node,
           isVisited: true,
-          className: "visited-node",
+          className: "grid-node visited-node",
           waitClassChange: 0,
         };
         newGrid[x][y] = newNode;
         setGrid(newGrid);
-      }, 25 * i);
+      }, 20 * i);
     }
 
     const m = path.length;
@@ -108,7 +74,7 @@ function App() {
         const newNode = {
           ...node,
           isShortestPath: true,
-          className: "shortest-path-node",
+          className: "grid-node shortest-path-node",
           waitClassChange: 0,
         };
         newGrid[x][y] = newNode;
@@ -124,6 +90,7 @@ function App() {
     setAlgorithm(algorithmName);
   };
 
+  // This function changes the algorithm that will be run
   const chooseAlgorithm: (
     algorithmName: string
   ) => (grid: node[][], startNode: node, endNode: node) => [node[], node[]] = (
@@ -143,7 +110,7 @@ function App() {
       newNode = {
         ...newGrid[x][y],
         isWall: !newGrid[x][y].isWall,
-        className: "wall-node",
+        className: "grid-node wall-node",
       };
     } else {
       newNode = {
@@ -156,23 +123,25 @@ function App() {
     setGrid(newGrid);
   };
 
+  // handles the case when the mouse button is down
   const handleMouseDown: (x: number, y: number) => void = (x, y) => {
     toggleWall(x, y);
-    const newMouseIsPressed = !mouseIsPressed;
-    setMouseIsPressed(newMouseIsPressed);
+    setMouseIsPressed(false);
   };
 
+  // handles the case whan the mouse button is down and you enter a node
   const handleMouseEnter: (x: number, y: number) => void = (x, y) => {
     if (mouseIsPressed) {
       toggleWall(x, y);
     }
   };
 
+  // handles the case when you mouse up
   const handleMouseUp: () => void = () => {
-    const newMouseIsPressed = !mouseIsPressed;
-    setMouseIsPressed(newMouseIsPressed);
+    setMouseIsPressed(false);
   };
 
+  // Render the app
   return (
     <div className="App">
       <NavBar>
@@ -213,12 +182,14 @@ function App() {
       </SecondaryHeader>
       <Grid
         grid={grid}
+        pairGrid={pairGrid}
+        maze={maze}
         handleMouseUp={handleMouseUp}
         handleMouseEnter={handleMouseEnter}
         handleMouseDown={handleMouseDown}
       />
     </div>
   );
-}
+};
 
-export default App;
+export default PathFindingVisualizer;
