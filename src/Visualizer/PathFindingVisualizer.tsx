@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./PathFindingVisualizer.css";
-import { Grid } from "./Grid";
-import { NavBar, NavItem, DropDownMenu, DropDownItem } from "./NavBar";
-import { SecondaryHeader } from "./SecondaryHeader";
-import { node } from "./usefulInterfaces";
-import { dijkstra, dijkstraWithWalls } from "./dijkstra";
-import { generateMazeGraph } from "./mazeGraph";
-import { constructGrid } from "./constructGrid";
+import { Grid } from "../Grid/Grid";
+import { NavBar, NavItem, DropDownMenu, DropDownItem } from "../NavBar/NavBar";
+import { SecondaryHeader } from "../SecondaryHeader/SecondaryHeader";
+import { node } from "../helper_functions/usefulInterfaces";
+import { dijkstra, dijkstraWithWalls } from "../helper_functions/dijkstra";
+import { generateMazeGraph } from "../helper_functions/mazeGraph";
+import { constructGrid } from "../helper_functions/constructGrid";
 
 const NUMBER_OF_ROWS: number = 50;
 const NUMBER_OF_COLUMN: number = 20;
@@ -29,6 +29,7 @@ const [firstpairGrid, mazeGraph] = generateMazeGraph(
 
 // Component rendering everything in the webpage.
 const PathFindingVisualizer: React.FC = () => {
+  // States managing the grid
   const [grid, setGrid] = useState(firstGrid);
   const [maze, setMaze] = useState(mazeGraph);
   const [pairGrid, setPairGrid] = useState(firstpairGrid);
@@ -90,7 +91,7 @@ const PathFindingVisualizer: React.FC = () => {
     setAlgorithm(algorithmName);
   };
 
-  // This function changes the algorithm that will be run
+  // This function changes the algorithm that will be run, at the moment only dijkstra is implemented
   const chooseAlgorithm: (
     algorithmName: string
   ) => (
@@ -106,44 +107,46 @@ const PathFindingVisualizer: React.FC = () => {
     return dijkstraWithWalls;
   };
 
-  // The following functions handles the making of walls in the grid
-  const toggleWall: (x: number, y: number) => void = (x, y) => {
-    const newGrid: node[][] = grid.slice();
-    let newNode;
-    if (!newGrid[x][y].isWall) {
-      newNode = {
-        ...newGrid[x][y],
-        isWall: !newGrid[x][y].isWall,
-        className: "grid-node wall-node",
-      };
-    } else {
-      newNode = {
-        ...newGrid[x][y],
-        isWall: !newGrid[x][y].isWall,
-        className: "grid-node",
-      };
-    }
-    newGrid[x][y] = newNode;
-    setGrid(newGrid);
-  };
+  // The following block of functions handles the making of walls in the grid
+  // This feature is currently not used as it is not a good fit with the current direction of the app
 
-  // handles the case when the mouse button is down
-  const handleMouseDown: (x: number, y: number) => void = (x, y) => {
-    toggleWall(x, y);
-    setMouseIsPressed(false);
-  };
+  // const toggleWall: (x: number, y: number) => void = (x, y) => {
+  //   const newGrid: node[][] = grid.slice();
+  //   let newNode;
+  //   if (!newGrid[x][y].isWall) {
+  //     newNode = {
+  //       ...newGrid[x][y],
+  //       isWall: !newGrid[x][y].isWall,
+  //       className: "grid-node wall-node",
+  //     };
+  //   } else {
+  //     newNode = {
+  //       ...newGrid[x][y],
+  //       isWall: !newGrid[x][y].isWall,
+  //       className: "grid-node",
+  //     };
+  //   }
+  //   newGrid[x][y] = newNode;
+  //   setGrid(newGrid);
+  // };
 
-  // handles the case whan the mouse button is down and you enter a node
-  const handleMouseEnter: (x: number, y: number) => void = (x, y) => {
-    if (mouseIsPressed) {
-      toggleWall(x, y);
-    }
-  };
+  // // handles the case when the mouse button is down
+  // const handleMouseDown: (x: number, y: number) => void = (x, y) => {
+  //   toggleWall(x, y);
+  //   setMouseIsPressed(false);
+  // };
 
-  // handles the case when you mouse up
-  const handleMouseUp: () => void = () => {
-    setMouseIsPressed(false);
-  };
+  // // handles the case whan the mouse button is down and you enter a node
+  // const handleMouseEnter: (x: number, y: number) => void = (x, y) => {
+  //   if (mouseIsPressed) {
+  //     toggleWall(x, y);
+  //   }
+  // };
+
+  // // handles the case when you mouse up
+  // const handleMouseUp: () => void = () => {
+  //   setMouseIsPressed(false);
+  // };
 
   // Render the app
   return (
@@ -196,14 +199,7 @@ const PathFindingVisualizer: React.FC = () => {
           Visualize the path!
         </button>
       </SecondaryHeader>
-      <Grid
-        grid={grid}
-        pairGrid={pairGrid}
-        maze={maze}
-        handleMouseUp={handleMouseUp}
-        handleMouseEnter={handleMouseEnter}
-        handleMouseDown={handleMouseDown}
-      />
+      <Grid grid={grid} pairGrid={pairGrid} maze={maze} />
     </div>
   );
 };

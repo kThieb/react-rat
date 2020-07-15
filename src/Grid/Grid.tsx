@@ -1,25 +1,15 @@
 import React from "react";
-import { GridNode } from "./GridNode";
+import { GridNode } from "../GridNode/GridNode";
 import "./Grid.css";
-import { node } from "./usefulInterfaces";
+import { node } from "../helper_functions/usefulInterfaces";
 
 interface Props {
   grid: node[][];
   maze: Map<[number, number], [number, number][]>;
   pairGrid: [number, number][][];
-  handleMouseUp: () => void;
-  handleMouseEnter: (x: number, y: number) => void;
-  handleMouseDown: (x: number, y: number) => void;
 }
 
-export const Grid: React.FC<Props> = ({
-  grid,
-  maze,
-  pairGrid,
-  handleMouseDown,
-  handleMouseEnter,
-  handleMouseUp,
-}) => {
+export const Grid: React.FC<Props> = ({ grid, maze, pairGrid }) => {
   // Renders the grid in the DOM thanks to the grid state in the App component
   return (
     <div className="grid">
@@ -33,9 +23,6 @@ export const Grid: React.FC<Props> = ({
                 key={id + index * rowLength}
                 node={node}
                 neighbors={ensure(maze.get(pairGrid[node.x][node.y]))}
-                handleMouseDown={handleMouseDown}
-                handleMouseEnter={handleMouseEnter}
-                handleMouseUp={handleMouseUp}
               ></GridNode>
             ))}
           </div>
