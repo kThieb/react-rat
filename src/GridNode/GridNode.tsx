@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./GridNode.css";
 import { node } from "../helper_functions/usefulInterfaces";
+import { prependOnceListener } from "process";
 
 interface Props {
   numberOfElementsPerRow: number;
@@ -31,6 +32,8 @@ export const _GridNode: React.FC<Props> = ({
     if (neighborY === node.y + 1) addedClassName += " no-wall-right";
     if (neighborY === node.y - 1) addedClassName += " no-wall-left";
   }
+
+  if (node.hasCheese) addedClassName += " cheese";
 
   return <div className={node.className + addedClassName}></div>;
 };

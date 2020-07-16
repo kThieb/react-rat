@@ -125,3 +125,9 @@
     background-color: #bdb2ff;
   }
 }
+
+/* Node with a cheese */
+
+.cheese {
+  background-color: yellow;
+}

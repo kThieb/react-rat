@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import "./Visualizer.css";
 import { Grid } from "../Grid/Grid";
 import { NavBar, NavItem, DropDownMenu, DropDownItem } from "../NavBar/NavBar";
-import { SecondaryHeader } from "../SecondaryHeader/SecondaryHeader";
 import { node } from "../helper_functions/usefulInterfaces";
-import { dijkstra, dijkstraWithWalls } from "../helper_functions/dijkstra";
+import {
+  // dijkstra,
+  dijkstraWithWalls,
+} from "../helper_functions/shortestPathAlgorithms/dijkstra";
 import { generateSquareMazeGraph } from "../helper_functions/mazeGenerators/squareMazeGenerator";
 import { constructGrid } from "../helper_functions/constructGrid";
 
-const NUMBER_OF_ROWS: number = 50;
-const NUMBER_OF_COLUMN: number = 20;
+// const NUMBER_OF_ROWS: number = 50;
+// const NUMBER_OF_COLUMN: number = 20;
 const N: number = 11;
 
 // We define these constants out of the functional component
@@ -23,12 +25,7 @@ const [firstGrid, firstStartNode, firstEndNode] = constructGrid(
   [N - 1, N - 1]
 );
 
-const [firstpairGrid, mazeGraph] = generateSquareMazeGraph(
-  N,
-  firstGrid,
-  false,
-  false
-);
+const [firstpairGrid, mazeGraph] = generateSquareMazeGraph(N, firstGrid, true);
 
 // Component rendering everything in the webpage.
 const Visualizer: React.FC = () => {

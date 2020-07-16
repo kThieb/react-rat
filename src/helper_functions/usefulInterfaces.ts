@@ -5,10 +5,10 @@ export interface node {
   isStart: boolean;
   isEnd: boolean;
   isVisited: boolean;
-  isWall: boolean;
   isShortestPath: boolean;
   className: string;
   waitClassChange: number;
+  hasCheese: boolean;
 }
 
 export interface simplifiedNode {

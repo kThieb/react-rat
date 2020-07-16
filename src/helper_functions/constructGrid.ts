@@ -23,10 +23,10 @@ export const constructGrid: (
         isStart: false,
         isEnd: false,
         isVisited: false,
-        isWall: false,
         isShortestPath: false,
         waitClassChange: 0,
         className: "grid-node",
+        hasCheese: false,
       };
       currentRow.push(currentNode);
     }
@@ -42,9 +42,44 @@ export const constructGrid: (
     isEnd: true,
     className: "grid-node end-node",
   };
+  result = piecesOfCheese(result, numberOfColumn, numberOfRow, 21);
   return [
     result,
     result[startNode[0]][startNode[1]],
     result[endNode[0]][endNode[1]],
   ];
+};
+
+const piecesOfCheese: (
+  grid: node[][],
+  m: number,
+  n: number,
+  cheeseNum: number
+) => node[][] = (grid, m, n, cheeseNum) => {
+  let visited: boolean[][] = new Array(n);
+  for (let i: number = 0; i < n; ++i) {
+    visited[i] = new Array(n);
+  }
+  for (let i: number = 0; i < n; ++i) {
+    for (let j: number = 0; j < n; ++j) {
+      visited[i][j] = false;
+    }
+  }
+
+  visited[0][0] = true;
+  visited[n - 1][n - 1] = true;
+  for (let k: number = 0; k < cheeseNum / 2; k++) {
+    let i = -1,
+      j = -1;
+    do {
+      i = Math.floor(Math.random() * n);
+      j = Math.floor(Math.random() * n);
+    } while (visited[i][j]);
+    visited[i][j] = true;
+    visited[n - 1 - i][n - 1 - j] = true;
+    grid[i][j].hasCheese = true;
+    grid[n - 1 - i][n - 1 - j].hasCheese = true;
+  }
+  grid[Math.floor(n / 2)][Math.floor(n / 2)].hasCheese = true;
+  return grid;
 };

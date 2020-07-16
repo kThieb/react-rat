@@ -1,5 +1,5 @@
-import { node } from "./usefulInterfaces";
-import { BinaryHeap } from "./binaryHeap";
+import { node } from "../usefulInterfaces";
+import { BinaryHeap } from "../binaryHeap";
 
 export const dijkstra: (
   grid: node[][],
@@ -62,8 +62,6 @@ export const dijkstra: (
       // Check if the coordinates are valid
       if (nextX >= 0 && nextX < m && nextY >= 0 && nextY < n) {
         let nextNode: node = grid[nextX][nextY];
-
-        if (nextNode.isWall) continue;
 
         // If the node is not yet visited, remove it from the heap and
         // put it back in with its new distance as the score function
@@ -160,8 +158,6 @@ export const dijkstraWithWalls: (
         neighbor[1] < n
       ) {
         let nextNode: node = grid[neighbor[0]][neighbor[1]];
-
-        if (nextNode.isWall) continue;
 
         // If the node is not yet visited, remove it from the heap and
         // put it back in with its new distance as the score function
