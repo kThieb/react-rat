@@ -1,34 +1,37 @@
 import React, { useState, useEffect } from "react";
-import "./PathFindingVisualizer.css";
+import "./Visualizer.css";
 import { Grid } from "../Grid/Grid";
 import { NavBar, NavItem, DropDownMenu, DropDownItem } from "../NavBar/NavBar";
 import { SecondaryHeader } from "../SecondaryHeader/SecondaryHeader";
 import { node } from "../helper_functions/usefulInterfaces";
 import { dijkstra, dijkstraWithWalls } from "../helper_functions/dijkstra";
-import { generateMazeGraph } from "../helper_functions/mazeGraph";
+import { generateSquareMazeGraph } from "../helper_functions/mazeGenerators/squareMazeGenerator";
 import { constructGrid } from "../helper_functions/constructGrid";
 
 const NUMBER_OF_ROWS: number = 50;
 const NUMBER_OF_COLUMN: number = 20;
+const N: number = 11;
 
 // We define these constants out of the functional component
 // that the App uses to avoid re-running the functions to create
 // these each time there is a re-render
 const [firstGrid, firstStartNode, firstEndNode] = constructGrid(
-  NUMBER_OF_ROWS,
-  NUMBER_OF_COLUMN,
-  [9, 10],
-  [9, 40]
+  N,
+  N,
+  // NUMBER_OF_COLUMN,
+  [0, 0],
+  [N - 1, N - 1]
 );
 
-const [firstpairGrid, mazeGraph] = generateMazeGraph(
-  NUMBER_OF_ROWS,
-  NUMBER_OF_COLUMN,
-  firstGrid
+const [firstpairGrid, mazeGraph] = generateSquareMazeGraph(
+  N,
+  firstGrid,
+  false,
+  false
 );
 
 // Component rendering everything in the webpage.
-const PathFindingVisualizer: React.FC = () => {
+const Visualizer: React.FC = () => {
   // States managing the grid
   const [grid, setGrid] = useState(firstGrid);
   const [maze, setMaze] = useState(mazeGraph);
@@ -123,7 +126,7 @@ const PathFindingVisualizer: React.FC = () => {
   //     newNode = {
   //       ...newGrid[x][y],
   //       isWall: !newGrid[x][y].isWall,
-  //       className: "grid-node",
+  //       className: "grid-node",visited: node[], path: node[]
   //     };
   //   }
   //   newGrid[x][y] = newNode;
@@ -152,6 +155,23 @@ const PathFindingVisualizer: React.FC = () => {
   return (
     <div className="App">
       <NavBar>
+        <div style={{ flexBasis: "7.5%" }}></div>
+        <div
+          className="nav-item"
+          onClick={(e) => {
+            visualizeAlgorithm(
+              ...chooseAlgorithm(algorithm)(
+                grid,
+                pairGrid,
+                mazeGraph,
+                startNode,
+                endNode
+              )
+            );
+          }}
+        >
+          Visualize!
+        </div>
         <NavItem icon="&#128512;">
           <DropDownMenu>
             <DropDownItem
@@ -162,7 +182,17 @@ const PathFindingVisualizer: React.FC = () => {
             </DropDownItem>
             <DropDownItem
               changeAlgorithm={handleAlgorithmChange}
-              algorithmName="dijkstraWithWalls"
+              algorithmName="dijks.icon-button {
+  --button-size: calc(var(--nav-size) * 0.5);
+  height: 3vh;
+  background-color: #484a4d;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 2px 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}traWithWalls"
             >
               Dijkstra's algorithm with a maze
             </DropDownItem>
@@ -181,7 +211,7 @@ const PathFindingVisualizer: React.FC = () => {
           </DropDownMenu>
         </NavItem>
       </NavBar>
-      <SecondaryHeader>
+      {/* <SecondaryHeader>
         <button
           className="visualize-button"
           onClick={(e) => {
@@ -198,10 +228,10 @@ const PathFindingVisualizer: React.FC = () => {
         >
           Visualize the path!
         </button>
-      </SecondaryHeader>
+      </SecondaryHeader> */}
       <Grid grid={grid} pairGrid={pairGrid} maze={maze} />
     </div>
   );
 };
 
-export default PathFindingVisualizer;
+export default Visualizer;

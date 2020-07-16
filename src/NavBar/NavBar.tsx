@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import "./NavBar.css";
 
-interface NavItemProps {
-  icon: string;
-}
-
 export const NavBar: React.FC = (props) => {
   return (
     <nav className="navbar">
@@ -12,6 +8,10 @@ export const NavBar: React.FC = (props) => {
     </nav>
   );
 };
+
+interface NavItemProps {
+  icon: string;
+}
 
 export const NavItem: React.FC<NavItemProps> = (props) => {
   const [open, setOpen] = useState(false);

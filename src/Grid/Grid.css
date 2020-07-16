@@ -1,6 +1,6 @@
 .row {
   display: flex;
-  width: 98vw;
+  width: 45vw;
   height: auto;
   justify-content: space-around;
 }
@@ -11,4 +11,5 @@
   align-items: center;
   flex-basis: 100%;
   height: 60vh;
+  margin-top: 15px;
 }
