@@ -38,7 +38,6 @@ export const generateSquareMazeGraph: (
   symmetry
 ) => {
   let [pairGrid, mazeGraph] = createMazeGraph(n, grid);
-  console.log(mazeGraph);
   // 1. Choose the initial cell, mark it as visited and push it to the stack
   let startNode: [number, number] = pairGrid[0][0];
   let stack: [number, number][] = [startNode];

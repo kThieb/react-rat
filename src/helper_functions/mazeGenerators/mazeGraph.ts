@@ -35,8 +35,6 @@ export const generateMazeGraph: (
   rowLength: number,
   columnLength: number,
   grid: node[][]
-  // verticalSymetry: boolean,
-  // centralSymetry: boolean
 ) => [[number, number][][], Map<[number, number], [number, number][]>] = (
   rowLength,
   columnLength,
@@ -99,8 +97,6 @@ const getNeighbors: (
   rowLength: number,
   columnLength: number,
   visited: any
-  // verticalSymetry: boolean,
-  // centralSymetry: boolean
 ) => [number, number][] = (
   pairGrid,
   currentNode,

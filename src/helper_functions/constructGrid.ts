@@ -35,12 +35,10 @@ export const constructGrid: (
   result[startNode[0]][startNode[1]] = {
     ...result[startNode[0]][startNode[1]],
     isStart: true,
-    className: "grid-node start-node",
   };
   result[endNode[0]][endNode[1]] = {
     ...result[endNode[0]][endNode[1]],
     isEnd: true,
-    className: "grid-node end-node",
   };
   result = piecesOfCheese(result, numberOfColumn, numberOfRow, 21);
   return [

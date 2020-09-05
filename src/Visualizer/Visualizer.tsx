@@ -34,7 +34,7 @@ const Visualizer: React.FC = () => {
   const [maze, setMaze] = useState(mazeGraph);
   const [pairGrid, setPairGrid] = useState(firstpairGrid);
   const [algorithm, setAlgorithm] = useState("dijkstra");
-  const [mouseIsPressed, setMouseIsPressed] = useState(false);
+  // const [mouseIsPressed, setMouseIsPressed] = useState(false);
 
   // States of the start and end node
   const [startNode, setStartNode] = useState(firstStartNode);
@@ -82,6 +82,13 @@ const Visualizer: React.FC = () => {
         setGrid(newGrid);
       }, 25 * n + 40 * i);
     }
+  };
+
+  const reinitializeGrid: () => void = () => {
+    console.log(firstGrid);
+    setGrid(firstGrid);
+    setMaze(mazeGraph);
+    setPairGrid(firstpairGrid);
   };
 
   // This function is passed to the drop down menu to handle the change of algorithm
@@ -152,7 +159,15 @@ const Visualizer: React.FC = () => {
   return (
     <div className="App">
       <NavBar>
-        <div style={{ flexBasis: "7.5%" }}></div>
+        <div
+          className="nav-item"
+          style={{ flexBasis: "7.5%" }}
+          onClick={(e) => {
+            reinitializeGrid();
+          }}
+        >
+          Reinitialize
+        </div>
         <div
           className="nav-item"
           onClick={(e) => {
@@ -179,17 +194,7 @@ const Visualizer: React.FC = () => {
             </DropDownItem>
             <DropDownItem
               changeAlgorithm={handleAlgorithmChange}
-              algorithmName="dijks.icon-button {
-  --button-size: calc(var(--nav-size) * 0.5);
-  height: 3vh;
-  background-color: #484a4d;
-  border-radius: 5px;
-  padding: 5px;
-  margin: 2px 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}traWithWalls"
+              algorithmName="dijkstraWithWalls"
             >
               Dijkstra's algorithm with a maze
             </DropDownItem>
@@ -208,24 +213,6 @@ const Visualizer: React.FC = () => {
           </DropDownMenu>
         </NavItem>
       </NavBar>
-      {/* <SecondaryHeader>
-        <button
-          className="visualize-button"
-          onClick={(e) => {
-            visualizeAlgorithm(
-              ...chooseAlgorithm(algorithm)(
-                grid,
-                pairGrid,
-                mazeGraph,
-                startNode,
-                endNode
-              )
-            );
-          }}
-        >
-          Visualize the path!
-        </button>
-      </SecondaryHeader> */}
       <Grid grid={grid} pairGrid={pairGrid} maze={maze} />
     </div>
   );

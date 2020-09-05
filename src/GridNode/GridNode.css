@@ -1,11 +1,13 @@
 /* normal grid node style */
 .grid-node {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   flex: 1 0;
   height: auto;
   border: 1px solid black;
   background-color: #ecf8f8;
-  /* border-radius: 1px; */
-  /* margin: 1px 1px; */
 }
 
 .grid-node:after {
@@ -14,14 +16,16 @@
   padding-bottom: 100%;
 }
 
-/* start node */
-.start-node {
-  background-color: green;
-}
+/* Style les emojis */
+.content {
+  width: 100%;
+  height: 100%;
+  font-size: 3em;
+  /* line-height: 40px; */
 
-/* end node */
-.end-node {
-  background-color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* handle the walls */
@@ -44,12 +48,12 @@
 /* visited nodes styles */
 .visited-node {
   background-color: #02c39a;
-  animation: colorChangeVisited 1500ms ease-in;
+  /* animation: colorChangeVisited 1500ms ease-in; */
 }
 
 .visited-node:after {
   background-color: #02c39a;
-  animation: visitedAnim 1500ms ease-in;
+  /* animation: visitedAnim 1500ms ease-in; */
 }
 
 @keyframes colorChangeVisited {
@@ -124,10 +128,4 @@
   100% {
     background-color: #bdb2ff;
   }
-}
-
-/* Node with a cheese */
-
-.cheese {
-  background-color: yellow;
 }
